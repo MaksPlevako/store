@@ -5,6 +5,8 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
+/password
+env.local.env
 
 # testing
 /coverage
@@ -28,9 +30,14 @@ yarn-error.log*
 # local env files
 .env*.local
 
+# dotenv environment variables file
+.env
+.env.test
+
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+

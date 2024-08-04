@@ -19,8 +19,8 @@ export default async function OrderHistory() {
 	return (
 		<ProfileLayout activeTab='order-history'>
 			<div>
-				<div>История заказов</div>
-				<div>
+				<div className='text-2xl font-medium mb-4'>История заказов</div>
+				<div className='border rounded-lg bg-white shadow-2xl px-5 pt-5'>
 					<OrdersTable uniqueStatuses={uniqueStatuses} orders={orders} />
 				</div>
 			</div>

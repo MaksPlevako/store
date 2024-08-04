@@ -1,5 +1,4 @@
 import clientPromise from '@/lib/mongodb'
-import { NextResponse } from 'next/server'
 
 export default async function handler(req, res) {
 	if (req.method === 'GET') {

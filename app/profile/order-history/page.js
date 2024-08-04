@@ -1,9 +1,29 @@
 import ProfileLayout from '@/app/components/ProfileLayout'
+import { auth } from '@/config/auth'
+import OrdersTable from '@/app/components/OrdersTable'
 
-export default function OrderHistory() {
+export default async function OrderHistory() {
+	const session = await auth()
+	const resUser = await fetch(
+		`http://localhost:3000/api/user/${session.user.email}`
+	)
+	const user = await resUser.json()
+
+	const resOrders = await fetch(`http://localhost:3000/api/orders/${user._id}`)
+
+	const orders = await resOrders.json()
+	const uniqueStatuses = [...new Set(orders.map(order => order.status))]
+
+	if (!user) return null
+
 	return (
 		<ProfileLayout activeTab='order-history'>
-			<h1>Order Historyasdasd</h1>
+			<div>
+				<div>История заказов</div>
+				<div>
+					<OrdersTable uniqueStatuses={uniqueStatuses} orders={orders} />
+				</div>
+			</div>
 		</ProfileLayout>
 	)
 }

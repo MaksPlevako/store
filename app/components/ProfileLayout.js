@@ -6,7 +6,7 @@ export default function ProfileLayout({ activeTab, children }) {
 	return (
 		<section className='container mx-auto mt-8 mb-16'>
 			<div className='flex flex-row gap-8'>
-				<nav className='border rounded p-3 shadow-2xl'>
+				<nav className='border rounded p-3 shadow-2xl w-max h-min'>
 					<ul className='flex flex-col gap-3'>
 						<li>
 							<Link
@@ -23,7 +23,7 @@ export default function ProfileLayout({ activeTab, children }) {
 									width={24}
 									height={24}
 								/>
-								Personal Information
+								Персональна інформація
 							</Link>
 						</li>
 						<li>
@@ -41,7 +41,7 @@ export default function ProfileLayout({ activeTab, children }) {
 									width={24}
 									height={24}
 								/>
-								Order History
+								Історія покупок
 							</Link>
 						</li>
 						<li>
@@ -59,7 +59,7 @@ export default function ProfileLayout({ activeTab, children }) {
 									width={24}
 									height={24}
 								/>
-								Addresses
+								Мої адреса
 							</Link>
 						</li>
 						<li>
@@ -77,7 +77,7 @@ export default function ProfileLayout({ activeTab, children }) {
 									width={24}
 									height={24}
 								/>
-								Payment Info
+								Мої реквізити
 							</Link>
 						</li>
 						<li>
@@ -95,7 +95,7 @@ export default function ProfileLayout({ activeTab, children }) {
 									width={24}
 									height={24}
 								/>
-								Chats
+								Мої чати
 							</Link>
 						</li>
 					</ul>

@@ -9,6 +9,7 @@ export default function ModalAddress({ changeModal, email }) {
 		apartment_num: '',
 		index: '',
 		department_number: '',
+		addressId: '',
 	})
 
 	const handleChange = e => {

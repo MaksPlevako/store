@@ -26,6 +26,7 @@ export default async function handler(req, res) {
 				...(index && { index }),
 				...(department_number && { department_number }),
 				city,
+				addressId: new ObjectId(),
 			}
 
 			await db.collection('users').updateOne(

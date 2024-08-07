@@ -81,7 +81,6 @@ export default function ChangeAddress({
 						>
 							{type === 'Дім' && (
 								<div className='flex flex-col gap-5'>
-									{console.log(addressId + ' in ' + address)}
 									<input
 										type='hidden'
 										name='addressId'
@@ -157,7 +156,6 @@ export default function ChangeAddress({
 							)}
 							{type === 'Нова пошта' && (
 								<div className='flex flex-col gap-5'>
-									{console.log(addressId + ' in post in ' + address)}
 									<input
 										type='hidden'
 										name='addressId'

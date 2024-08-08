@@ -5,7 +5,7 @@ export default function Footer() {
 	return (
 		<footer className='bg-[#2F2B4A] pt-10 pb-5 text-white container:none'>
 			<div className='container mx-auto'>
-				<div className='grid grid-cols-5 justify-between'>
+				<div className='grid grid-cols-5 justify-between items-start'>
 					<div>
 						<div className='text-[18px] font-medium mb-5'>Меню компанії</div>
 						<ul className='text-[#F4F5F6] grid gap-y-2'>
@@ -89,21 +89,12 @@ export default function Footer() {
 							</li>
 						</ul>
 					</div>
-					<div>
-						<button className='flex flex-row items-start gap-2 border rounded-lg bg-white bg-opacity-10 py-[15px] px-5'>
-							<Image src='/img/chat.svg' alt='chat' width={20} height={20} />
-							<div className=''>
-								<div className='font-medium'>Консультация Online</div>
-								<div className='text-sm'>Задавайте вопросы</div>
-							</div>
-						</button>
-						<div className='flex flex-row gap-2 items-center mt-5'>
-							<div className='relative flex h-3 w-3'>
-								<span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75'></span>
-								<span className='relative inline-flex rounded-full h-3 w-3 bg-green-500'></span>
-							</div>
-							<div>Сервис работает в обычном режиме</div>
+					<div className='flex flex-row gap-2 items-center mt-5'>
+						<div className='relative flex h-3 w-3'>
+							<span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75'></span>
+							<span className='relative inline-flex rounded-full h-3 w-3 bg-green-500'></span>
 						</div>
+						<div>Сервис работает в обычном режиме</div>
 					</div>
 				</div>
 				<div className='border w-full border-gray-600 mt-10 mb-5' />

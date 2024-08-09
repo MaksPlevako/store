@@ -16,19 +16,45 @@ export default async function handler(req, res) {
 				series,
 				price,
 			} = req.query
-			const newReq = {
-				...(battery_name && { battery_name }),
-				...(battery_capacity && { battery_capacity }),
-				...(terminals && { terminals }),
-				...(battery_mount && { battery_mount }),
-				...(voltage && { voltage }),
-				...(terminal_arrangement && { terminal_arrangement }),
-				...(series && { series }),
-				...(price && { price }),
+
+			const parseArray = param => (param ? param.split(',') : [])
+
+			const parseNumbers = arr =>
+				arr.map(val => {
+					const num = parseFloat(val)
+					return isNaN(num) ? val : num
+				})
+
+			const query = {
+				...(battery_name && {
+					battery_name: { $in: parseArray(battery_name) },
+				}),
+				...(battery_capacity && {
+					battery_capacity: { $in: parseNumbers(parseArray(battery_capacity)) },
+				}),
+				...(terminals && {
+					terminals: { $in: parseNumbers(parseArray(terminals)) },
+				}),
+				...(battery_mount && {
+					battery_mount: { $in: parseArray(battery_mount) },
+				}),
+				...(voltage && {
+					voltage: { $in: parseNumbers(parseArray(voltage)) },
+				}),
+				...(terminal_arrangement && {
+					terminal_arrangement: { $in: parseArray(terminal_arrangement) },
+				}),
+				...(series && {
+					series: { $in: parseArray(series) },
+				}),
+				...(price && {
+					price: { $in: parseNumbers(parseArray(price)) },
+				}),
 			}
+
 			const batteries = await db
 				.collection('car_batteries')
-				.find(newReq)
+				.find(query)
 				.toArray()
 
 			if (batteries.length > 0) {

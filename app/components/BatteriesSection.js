@@ -6,7 +6,7 @@ export default function BatteriesSection({ batteries }) {
 			{batteries.map(battery => (
 				<div
 					className='border rounded bg-white shadow-2xl p-5 group relative h-min'
-					key={battery.article}
+					key={battery._id}
 				>
 					<Image
 						src={battery.img}

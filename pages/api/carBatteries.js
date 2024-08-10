@@ -1,4 +1,5 @@
 import clientPromise from '@/lib/mongodb'
+import { ObjectId } from 'mongodb'
 
 export default async function handler(req, res) {
 	const client = await clientPromise
@@ -15,6 +16,7 @@ export default async function handler(req, res) {
 				terminal_arrangement,
 				series,
 				price,
+				_id,
 			} = req.query
 
 			const parseArray = param => (param ? param.split(',') : [])
@@ -49,6 +51,9 @@ export default async function handler(req, res) {
 				}),
 				...(price && {
 					price: { $in: parseNumbers(parseArray(price)) },
+				}),
+				...(_id && {
+					_id: new ObjectId(_id),
 				}),
 			}
 

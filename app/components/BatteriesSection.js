@@ -1,10 +1,12 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function BatteriesSection({ batteries }) {
 	return (
-		<main className='w-full grid grid-cols-3 gap-x-2.5 gap-y-5'>
+		<main className='w-full grid grid-cols-3 gap-x-2.5 gap-y-5 h-min'>
 			{batteries.map(battery => (
-				<div
+				<Link
+					href={`/car-batteries/${battery._id}`}
 					className='border rounded bg-white shadow-2xl p-5 group relative h-min'
 					key={battery._id}
 				>
@@ -21,7 +23,7 @@ export default function BatteriesSection({ batteries }) {
 						</div>
 						<div className='my-1.5'>{battery.title}</div>
 						<div className='text-[#7A7680]'>
-							Артикуль:
+							Артикул:
 							<span className='text-[#453888]'>{battery.article}</span>
 						</div>
 						<button className='border rounded w-full py-2.5 mt-3 font-medium text-[#6B59CC] bg-[#5946D7] border-[#5946D7] bg-opacity-10 hover:bg-opacity-100 hover:text-white transition-all'>
@@ -49,7 +51,7 @@ export default function BatteriesSection({ batteries }) {
 							</div>
 						</div>
 					</div>
-				</div>
+				</Link>
 			))}
 		</main>
 	)

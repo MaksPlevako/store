@@ -104,7 +104,7 @@ export default function ModalCategories({ changeModal }) {
 						<div className='ml-5'>Автохімія</div>
 					</Link>
 					<Link
-						href='/categories/brakes'
+						href='/rims'
 						className='flex flex-row items-center border bg-slate-50 py-5 px-8 hover:scale-105 ease-in-out transition'
 					>
 						<Image

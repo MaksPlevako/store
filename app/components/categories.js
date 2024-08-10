@@ -121,7 +121,7 @@ export default function Categories() {
 					</div>
 				</Link>
 				<Link
-					href='/categories/brakes'
+					href='/rims'
 					className='flex flex-row border bg-slate-50 py-5 px-8 hover:scale-105 ease-in-out transition'
 				>
 					<Image src='\img\menu\wheel.svg' alt='wheel' width={48} height={48} />

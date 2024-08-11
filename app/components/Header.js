@@ -45,7 +45,7 @@ export default function Header() {
 					<Link href='/oils'>Автомасла</Link>
 					<Link href='/original-details'>Оригінальні запчастини</Link>
 					<Link href='/non-original_components'>Неоригінальні запчастини</Link>
-					<Link href='/lightbulb'>Лампочки</Link>
+					<Link href='/car-light'>Автосвітло</Link>
 					<Link href='/car-batteries'>Акумулятори</Link>
 				</nav>
 				<button className='flex flex-row items-center border border-white rounded bg-[#F4F5F6] py-2 px-4'>

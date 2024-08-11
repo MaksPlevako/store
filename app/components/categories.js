@@ -146,7 +146,7 @@ export default function Categories() {
 					</div>
 				</Link>
 				<Link
-					href='/categories/brakes'
+					href='/car-light'
 					className='flex flex-row border bg-slate-50 py-5 px-8 hover:scale-105 ease-in-out transition'
 				>
 					<Image
@@ -156,7 +156,7 @@ export default function Categories() {
 						height={48}
 					/>
 					<div className='ml-5'>
-						<div className='text-xl'>Автолампи</div>
+						<div className='text-xl'>Автосвітло</div>
 						<div className='text-sm text-[#505255]'>730 товаров</div>
 					</div>
 				</Link>

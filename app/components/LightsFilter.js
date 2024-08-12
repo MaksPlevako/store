@@ -1,7 +1,7 @@
-import LightsSection from './RimsSection'
-import FiltrationLights from './FiltrationRims'
+import LightsSection from './LightsSection'
+import FiltrationLights from './FiltrationLights'
 
-export default async function RimsFilter({ searchParams }) {
+export default async function LightsFilter({ searchParams }) {
 	const brand = Array.isArray(searchParams.brand)
 		? searchParams.brand.join(',')
 		: searchParams.brand || ''

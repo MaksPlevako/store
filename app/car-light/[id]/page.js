@@ -53,7 +53,7 @@ export default async function Lights({ params }) {
 								/>
 							</svg>
 							<Link
-								href='/car-lightteries'
+								href='/car-light'
 								className='ms-1 text-sm font-medium text-gray-700 hover:text-black'
 							>
 								Автосвітло
@@ -94,7 +94,7 @@ export default async function Lights({ params }) {
 						alt={light.article}
 						width={300}
 						height={300}
-						className='w-1/2 h-min mx-auto'
+						className='w-2/5 h-min mx-auto'
 					/>
 					<div className='w-1/2'>
 						<div className='text-2xl font-medium mb-5'>{light.title}</div>
@@ -131,21 +131,21 @@ export default async function Lights({ params }) {
 							<div className='text-2xl font-medium'>Характеристики</div>
 							<div className='border border-gray-400 w-full my-3' />
 							<div className='grid grid-cols-3 gap-3'>
-								<div>Тип лампи:</div>
+								<div className='col-span-2'>Тип лампи:</div>
 								<div className='text-black'>{light.type}</div>
-								<div>Вид лампи:</div>
+								<div className='col-span-2'>Вид лампи:</div>
 								<div className='text-black'>{light.lamp_kind}</div>
-								<div>Колірна температура:</div>
+								<div className='col-span-2'>Колірна температура:</div>
 								<div className='text-black'>{light.color_temperature}</div>
-								<div>Цоколь:</div>
+								<div className='col-span-2'>Цоколь:</div>
 								<div className='text-black'>{light.socle}</div>
-								<div>Колір світла:</div>
+								<div className='col-span-2'>Колір світла:</div>
 								<div className='text-black'>{light.color}</div>
-								<div>Призначення:</div>
+								<div className='col-span-2'>Призначення:</div>
 								<div className='text-black'>{light.assignment}</div>
-								<div>Потужність:</div>
+								<div className='col-span-2'>Потужність:</div>
 								<div className='text-black'>{light.power}</div>
-								<div>Вольтаж:</div>
+								<div className='col-span-2'>Вольтаж:</div>
 								<div className='text-black'>{light.voltage}</div>
 							</div>
 						</div>

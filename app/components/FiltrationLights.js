@@ -125,9 +125,9 @@ export default function FiltrationLights({ lights, response }) {
 						>
 							<input
 								type='checkbox'
-								name='rims_name'
+								name='brand'
 								value={brand}
-								checked={filters.rims_name.includes(brand)}
+								checked={filters.brand.includes(brand)}
 								className='relative peer appearance-none w-5 h-5 border border-[#DEDEE2] rounded bg-white mt-1 hover:bg-[#5946D7] hover:bg-opacity-20 checked:bg-[#5946D7] checked:border-0'
 								onChange={handleCheckboxChange}
 							/>
@@ -155,9 +155,9 @@ export default function FiltrationLights({ lights, response }) {
 						>
 							<input
 								type='checkbox'
-								name='rims_type'
+								name='type'
 								value={type}
-								checked={filters.rims_type.includes(type)}
+								checked={filters.type.includes(type)}
 								className='relative peer appearance-none w-5 h-5 border border-[#DEDEE2] rounded bg-white mt-1 hover:bg-[#5946D7] hover:bg-opacity-20 checked:bg-[#5946D7] checked:border-0'
 								onChange={handleCheckboxChange}
 							/>

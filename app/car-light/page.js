@@ -1,4 +1,4 @@
-import LightsFilter from '../components/RimsFilter'
+import LightsFilter from '../components/LightsFilter'
 
 export default function CarLights({ searchParams }) {
 	return (

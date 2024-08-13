@@ -1,11 +1,30 @@
-import clientPromise from '@/lib/mongodb'
-import { ObjectId } from 'mongodb'
+import connectToDatabase from '@/lib/mongoose'
+import Addresses from '@/models/Addresses'
+import mongoose from 'mongoose'
 
 export default async function handler(req, res) {
-	const client = await clientPromise
-	const db = client.db('store')
+	await connectToDatabase()
 
-	if (req.method === 'POST') {
+	if (req.method === 'GET') {
+		try {
+			const { user_id } = req.query
+
+			if (!mongoose.Types.ObjectId.isValid(user_id)) {
+				return res.status(400).json({ message: 'Invalid user ID' })
+			}
+
+			const addresses = await Addresses.find({ user_id }).exec()
+
+			if (addresses.length > 0) {
+				res.status(200).json(addresses)
+			} else {
+				res.status(404).json({ message: 'Addresses not found' })
+			}
+		} catch (error) {
+			console.error('Error fetching addresses:', error)
+			res.status(500).json({ message: 'Error fetching addresses', error })
+		}
+	} else if (req.method === 'POST') {
 		try {
 			const {
 				type,
@@ -15,10 +34,14 @@ export default async function handler(req, res) {
 				index,
 				department_number,
 				city,
-				email,
+				user_id,
 			} = req.body
 
-			const newAddress = {
+			if (!mongoose.Types.ObjectId.isValid(user_id)) {
+				return res.status(400).json({ message: 'Invalid user ID' })
+			}
+
+			const newAddress = new Addresses({
 				type,
 				address,
 				street,
@@ -26,39 +49,40 @@ export default async function handler(req, res) {
 				...(index && { index }),
 				...(department_number && { department_number }),
 				city,
-				addressId: new ObjectId(),
-			}
+				createdAt: new Date(),
+				user_id,
+			})
 
-			await db.collection('users').updateOne(
-				{ email: email },
-				{
-					$push: { addresses: newAddress },
-				}
-			)
+			await newAddress.save()
 
-			res.status(200).json({ message: 'Address added successfully' })
+			res.status(201).json({ message: 'Address added successfully' })
 		} catch (error) {
-			console.error(error)
+			console.error('Failed to add address:', error)
 			res.status(500).json({ error: 'Failed to add address' })
 		}
 	} else if (req.method === 'DELETE') {
 		try {
-			const { email, addressId } = req.query
+			const { _id } = req.query
 
-			await db
-				.collection('users')
-				.updateOne(
-					{ email: email },
-					{ $pull: { addresses: { addressId: new ObjectId(addressId) } } }
-				)
+			if (!mongoose.Types.ObjectId.isValid(_id)) {
+				return res.status(400).json({ message: 'Invalid address ID' })
+			}
 
-			res.status(200).json({ message: 'Address deleted successfully' })
+			const result = await Addresses.deleteOne({
+				_id: new mongoose.Types.ObjectId(_id),
+			})
+
+			if (result.deletedCount > 0) {
+				res.status(200).json({ message: 'Address deleted successfully' })
+			} else {
+				res.status(404).json({ message: 'Address not found' })
+			}
 		} catch (error) {
-			console.error(error)
+			console.error('Failed to delete address:', error)
 			res.status(500).json({ error: 'Failed to delete address' })
 		}
 	} else {
-		res.setHeader('Allow', ['POST', 'DELETE'])
+		res.setHeader('Allow', ['POST', 'DELETE', 'GET'])
 		res.status(405).end(`Method ${req.method} Not Allowed`)
 	}
 }

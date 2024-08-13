@@ -1,17 +1,16 @@
-import clientPromise from '@/lib/mongodb'
+import connectToDatabase from '@/lib/mongoose'
+import User from '@/models/User'
 
 export default async function handler(req, res) {
+	await connectToDatabase()
+	const email = req.query.email
+
 	if (req.method === 'GET') {
 		try {
-			const { sessionEmail } = req.query
-
-			const client = await clientPromise
-			const db = client.db('store')
-
-			const user = await db.collection('users').findOne({ email: sessionEmail })
+			const user = await User.findOne({ email }).exec()
 
 			if (user) {
-				const { password, ...userWithoutPass } = user
+				const { password, ...userWithoutPass } = user.toObject()
 				res.status(200).json(userWithoutPass)
 			} else {
 				res.status(404).json({ message: 'User not found' })
@@ -21,14 +20,10 @@ export default async function handler(req, res) {
 		}
 	} else if (req.method === 'POST') {
 		try {
-			const { sessionEmail } = req.query
-			const client = await clientPromise
-			const db = client.db('store')
+			const { name, phone } = req.body
 
-			const { name, phone } = await req.body
-
-			const result = await db.collection('users').updateOne(
-				{ email: sessionEmail },
+			const result = await User.updateOne(
+				{ email },
 				{
 					$set: {
 						name,
@@ -39,7 +34,6 @@ export default async function handler(req, res) {
 			)
 
 			if (result.modifiedCount === 1) {
-				// Перенаправление после успешного обновления профиля
 				res.redirect(302, '/profile/personal-info')
 			} else {
 				res.status(400).json({ message: 'Profile update failed' })
@@ -49,7 +43,7 @@ export default async function handler(req, res) {
 			res.status(500).json({ message: 'Error updating profile', error })
 		}
 	} else {
-		res.setHeader('Allow', ['GET'])
+		res.setHeader('Allow', ['GET', 'POST'])
 		res.status(405).end(`Method ${req.method} Not Allowed`)
 	}
 }

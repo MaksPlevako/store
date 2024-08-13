@@ -4,15 +4,19 @@ import { auth } from '@/config/auth'
 export default async function PersonalInfo() {
 	const session = await auth()
 	const res = await fetch(
-		`http://localhost:3000/api/user/${session.user.email}`
+		`http://localhost:3000/api/user/user?email=${session.user.email}`
 	)
 	const user = await res.json()
+
 	if (!user) return null
 	return (
 		<ProfileLayout activeTab='personal-info'>
 			<div className='text-2xl font-medium mb-6'>Персональная информация</div>
 			<div className='border rounded-2xl bg-white p-8 shadow-2xl'>
-				<form method='POST' action={`/api/user/${session.user.email}`}>
+				<form
+					method='POST'
+					action={`/api/user/user?email=${session.user.email}`}
+				>
 					<div className='relative  w-full mb-5 '>
 						<input
 							type='text'

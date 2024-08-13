@@ -5,14 +5,20 @@ import ChangeAddress from '@/app/components/ChangeAddress'
 
 export default async function Addresses() {
 	const session = await auth()
-	const res = await fetch(
-		`http://localhost:3000/api/user/${session.user.email}`
+
+	const resUser = await fetch(
+		`http://localhost:3000/api/user/user?email=${session.user.email}`
 	)
-	const user = await res.json()
+	const user = await resUser.json()
+	const resAddresses = await fetch(
+		`http://localhost:3000/api/user/address?user_id=${user._id}`
+	)
+	const addresses = await resAddresses.json()
+	if (!addresses) return null
 	if (!user) return null
 
-	const houses = user.addresses.filter(address => address.type === 'Дім')
-	const posts = user.addresses.filter(address => address.type === 'Нова пошта')
+	const houses = addresses.filter(address => address.type === 'Дім')
+	const posts = addresses.filter(address => address.type === 'Нова пошта')
 
 	return (
 		<ProfileLayout activeTab='addresses'>
@@ -26,7 +32,7 @@ export default async function Addresses() {
 						<div>
 							{houses.map(house => (
 								<div
-									key={house.addressId}
+									key={house._id}
 									className='border rounded-xl border-[#7A7680] p-5 relative my-2'
 								>
 									<div className='font-medium text-[18px]'>
@@ -38,8 +44,8 @@ export default async function Addresses() {
 									</div>
 									<div className='text-[#55556D]'>Індекс {house.index}</div>
 									<ChangeAddress
-										email={session.user.email}
-										addressId={house.addressId}
+										user_id={user._id}
+										_id={house._id}
 										address={house.address}
 										street={house.street}
 										apartment_num={house.apartment_num}
@@ -58,7 +64,7 @@ export default async function Addresses() {
 						<div>
 							{posts.map(post => (
 								<div
-									key={post.addressId}
+									key={post._id}
 									className='border rounded-xl border-[#7A7680] p-5 relative my-2'
 								>
 									<div className='font-medium text-[18px]'>
@@ -69,8 +75,8 @@ export default async function Addresses() {
 										м. {post.city}
 									</div>
 									<ChangeAddress
-										email={session.user.email}
-										addressId={post.addressId}
+										user_id={user._id}
+										_id={post._id}
 										address={post.address}
 										street={post.street}
 										department_number={post.department_number}
@@ -82,7 +88,7 @@ export default async function Addresses() {
 						</div>
 					</div>
 				)}
-				<ButtonAddress email={session.user.email} />
+				<ButtonAddress user_id={user._id} />
 			</div>
 		</ProfileLayout>
 	)

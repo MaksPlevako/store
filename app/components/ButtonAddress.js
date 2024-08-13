@@ -4,7 +4,7 @@ import ModalAddress from './ModalAddress'
 
 import Image from 'next/image'
 
-export default function ButtonAddress({ email }) {
+export default function ButtonAddress({ user_id }) {
 	const [open, setOpen] = useState(false)
 	const changeModal = () => {
 		setOpen(!open)
@@ -24,7 +24,7 @@ export default function ButtonAddress({ email }) {
 				/>
 				Добавити адресу
 			</button>
-			{open && <ModalAddress email={email} changeModal={changeModal} />}
+			{open && <ModalAddress user_id={user_id} changeModal={changeModal} />}
 		</div>
 	)
 }

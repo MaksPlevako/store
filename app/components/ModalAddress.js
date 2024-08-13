@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 
-export default function ModalAddress({ changeModal, email }) {
+export default function ModalAddress({ changeModal, user_id }) {
 	const [type, setType] = useState('Дім')
 	const [formData, setFormData] = useState({
 		city: '',
@@ -11,7 +11,6 @@ export default function ModalAddress({ changeModal, email }) {
 		apartment_num: '',
 		index: '',
 		department_number: '',
-		addressId: '',
 	})
 
 	const handleChange = e => {
@@ -27,7 +26,7 @@ export default function ModalAddress({ changeModal, email }) {
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ ...formData, type, email }),
+			body: JSON.stringify({ ...formData, type, user_id }),
 		})
 
 		const result = await response.json()

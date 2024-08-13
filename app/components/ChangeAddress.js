@@ -3,8 +3,7 @@
 import React, { useState } from 'react'
 
 export default function ChangeAddress({
-	email,
-	addressId,
+	_id,
 	address,
 	street,
 	index,
@@ -18,15 +17,12 @@ export default function ChangeAddress({
 	const handleDelete = async e => {
 		e.preventDefault()
 
-		const response = await fetch(
-			`/api/user/address?addressId=${addressId}&email=${email}`,
-			{
-				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			}
-		)
+		const response = await fetch(`/api/user/address?_id=${_id}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
 
 		if (response.ok) {
 			alert('Адрес успешно удален')
@@ -81,13 +77,8 @@ export default function ChangeAddress({
 						>
 							{type === 'Дім' && (
 								<div className='flex flex-col gap-5'>
-									<input
-										type='hidden'
-										name='addressId'
-										defaultValue={addressId}
-									/>
+									<input type='hidden' name='_id' defaultValue={_id} />
 									<input type='hidden' name='type' defaultValue={type} />
-									<input type='hidden' name='email' defaultValue={email} />
 									<div className='relative w-full'>
 										<label className='absolute text-sm text-[#55556D] -top-2.5 left-3 z-10 scale-90 bg-white'>
 											Місто
@@ -156,13 +147,8 @@ export default function ChangeAddress({
 							)}
 							{type === 'Нова пошта' && (
 								<div className='flex flex-col gap-5'>
-									<input
-										type='hidden'
-										name='addressId'
-										defaultValue={addressId}
-									/>
+									<input type='hidden' name='_id' defaultValue={_id} />
 									<input type='hidden' name='type' defaultValue={type} />
-									<input type='hidden' name='email' defaultValue={email} />
 									<div className='relative w-full'>
 										<label className='absolute text-sm text-[#55556D] -top-2.5 left-3 z-10 scale-90 bg-white'>
 											Місто

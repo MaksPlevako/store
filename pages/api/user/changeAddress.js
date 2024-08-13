@@ -1,12 +1,12 @@
-import clientPromise from '@/lib/mongodb'
-import { ObjectId } from 'mongodb'
+import mongoose from 'mongoose'
+import connectToDatabase from '@/lib/mongoose'
+import Addresses from '@/models/Addresses' // Убедитесь, что эта модель правильно определена
 
 export default async function handler(req, res) {
+	await connectToDatabase()
+
 	if (req.method === 'POST') {
 		try {
-			const client = await clientPromise
-			const db = client.db('store')
-
 			const {
 				type,
 				address,
@@ -15,16 +15,16 @@ export default async function handler(req, res) {
 				index,
 				department_number,
 				city,
-				email,
-				addressId,
+				_id,
 			} = req.body
 
-			if (!ObjectId.isValid(addressId)) {
-				return res.status(400).json({ message: `Invalid address ID` })
+			console.log(req.body)
+
+			if (!mongoose.Types.ObjectId.isValid(_id)) {
+				return res.status(400).json({ message: 'Invalid address ID' })
 			}
 
 			const updatedAddress = {
-				addressId: new ObjectId(addressId),
 				type,
 				address,
 				street,
@@ -35,12 +35,10 @@ export default async function handler(req, res) {
 				updatedAt: new Date(),
 			}
 
-			const result = await db
-				.collection('users')
-				.updateOne(
-					{ email: email, 'addresses.addressId': new ObjectId(addressId) },
-					{ $set: { 'addresses.$': updatedAddress } }
-				)
+			const result = await Addresses.updateOne(
+				{ _id: new mongoose.Types.ObjectId(_id) },
+				{ $set: updatedAddress }
+			)
 
 			if (result.modifiedCount === 1) {
 				res.redirect(302, '/profile/addresses')
@@ -52,7 +50,7 @@ export default async function handler(req, res) {
 			res.status(500).json({ message: 'Error updating address', error })
 		}
 	} else {
-		res.setHeader('Allow', ['GET'])
+		res.setHeader('Allow', ['POST'])
 		res.status(405).end(`Method ${req.method} Not Allowed`)
 	}
 }

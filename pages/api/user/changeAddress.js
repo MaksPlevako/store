@@ -18,8 +18,6 @@ export default async function handler(req, res) {
 				_id,
 			} = req.body
 
-			console.log(req.body)
-
 			if (!mongoose.Types.ObjectId.isValid(_id)) {
 				return res.status(400).json({ message: 'Invalid address ID' })
 			}

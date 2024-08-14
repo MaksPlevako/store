@@ -2,21 +2,18 @@
 
 import React, { useState } from 'react'
 
-export default function ChangeCard({ email, paymentId, card_num, card_name }) {
+export default function ChangeCard({ user_id, _id, card_num, card_name }) {
 	const [changeModal, setChangeModal] = useState(false)
 
 	const handleDelete = async e => {
 		e.preventDefault()
 
-		const response = await fetch(
-			`/api/user/payment?paymentId=${paymentId}&email=${email}`,
-			{
-				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			}
-		)
+		const response = await fetch(`/api/user/payment?_id=${_id}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
 
 		if (response.ok) {
 			alert('Card успешно удален')
@@ -70,8 +67,8 @@ export default function ChangeCard({ email, paymentId, card_num, card_name }) {
 							action={'http://localhost:3000/api/user/changePayment'}
 						>
 							<div className='flex flex-col gap-5'>
-								<input type='hidden' name='paymentId' value={paymentId} />
-								<input type='hidden' name='email' value={email} />
+								<input type='hidden' name='_id' value={_id} />
+								<input type='hidden' name='user_id' value={user_id} />
 								<div className='relative w-full'>
 									<label className='absolute text-sm text-[#55556D] -top-2.5 left-3 z-10 scale-90 bg-white'>
 										Назва карти

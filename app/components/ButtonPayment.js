@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import ModalPayment from './ModalPayment'
 import Image from 'next/image'
 
-export default function ButtonPayment({ email }) {
+export default function ButtonPayment({ user_id }) {
 	const [open, setOpen] = useState(false)
 	const changeModal = () => {
 		setOpen(!open)
@@ -23,7 +23,7 @@ export default function ButtonPayment({ email }) {
 				/>
 				Добавити карту
 			</button>
-			{open && <ModalPayment email={email} changeModal={changeModal} />}
+			{open && <ModalPayment user_id={user_id} changeModal={changeModal} />}
 		</div>
 	)
 }

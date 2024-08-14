@@ -11,6 +11,7 @@ export default async function handler(req, res) {
 
 			if (user) {
 				const { password, ...userWithoutPass } = user.toObject()
+
 				res.status(200).json(userWithoutPass)
 			} else {
 				res.status(404).json({ message: 'User not found' })

@@ -1,9 +1,9 @@
-import clientPromise from '@/lib/mongodb'
-import { ObjectId } from 'mongodb'
+import mongoose from 'mongoose'
+import CarLights from '@/models/CarLights'
+import connectToDatabase from '@/lib/mongoose'
 
 export default async function handler(req, res) {
-	const client = await clientPromise
-	const db = client.db('store')
+	await connectToDatabase()
 
 	if (req.method === 'GET') {
 		try {
@@ -22,7 +22,6 @@ export default async function handler(req, res) {
 			} = req.query
 
 			const parseArray = param => (param ? param.split(',') : [])
-
 			const parseNumbers = arr =>
 				arr.map(val => {
 					const num = parseFloat(val)
@@ -61,11 +60,11 @@ export default async function handler(req, res) {
 					price: { $in: parseNumbers(parseArray(price)) },
 				}),
 				...(_id && {
-					_id: new ObjectId(_id),
+					_id: new mongoose.Types.ObjectId(_id),
 				}),
 			}
 
-			const lights = await db.collection('car_lights').find(query).toArray()
+			const lights = await CarLights.find(query)
 
 			if (lights.length > 0) {
 				res.status(200).json(lights)

@@ -19,7 +19,7 @@ export default function Registration() {
 
 		const JSONdata = JSON.stringify(data)
 
-		const response = await fetch('/api/registration', {
+		const response = await fetch('http://localhost:3000/api/registration', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

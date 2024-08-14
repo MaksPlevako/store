@@ -1,4 +1,5 @@
-const clientPromise = require('../../lib/mongodb')
+import connectToDatabase from '@/lib/mongoose'
+import Details from '@/models/Details'
 
 export default async (req, res) => {
 	if (
@@ -11,10 +12,12 @@ export default async (req, res) => {
 		)
 		return
 	}
+
 	try {
-		const client = await clientPromise
-		const db = client.db('store')
-		const details = await db.collection('details').find({}).toArray()
+		await connectToDatabase()
+
+		const details = await Details.find({}).exec()
+
 		return res.status(200).json(details)
 	} catch (e) {
 		console.error('Error fetching details:', e)

@@ -1,43 +1,43 @@
-import clientPromise from '@/lib/mongodb'
-import { ObjectId } from 'mongodb'
+import connectToDatabase from '@/lib/mongoose'
+import Payment from '@/models/Payment'
+import mongoose from 'mongoose'
 
 export default async function handler(req, res) {
+	await connectToDatabase()
+
 	if (req.method === 'POST') {
 		try {
-			const client = await clientPromise
-			const db = client.db('store')
+			const { _id, card_name, card_num, user_id } = req.body
 
-			const { paymentId, card_name, card_num, email } = req.body
-
-			if (!ObjectId.isValid(paymentId)) {
-				return res.status(400).json({ message: `Invalid address ID` })
+			if (!mongoose.Types.ObjectId.isValid(_id)) {
+				return res.status(400).json({ message: 'Invalid payment ID' })
 			}
 
+			console.log(_id, card_name, card_num, user_id)
+
 			const updatedPayment = {
-				paymentId: new ObjectId(paymentId),
 				card_name,
 				card_num,
 				updatedAt: new Date(),
+				user_id,
 			}
 
-			const result = await db
-				.collection('users')
-				.updateOne(
-					{ email: email, 'payment.paymentId': new ObjectId(paymentId) },
-					{ $set: { 'payment.$': updatedPayment } }
-				)
+			const result = await Payment.updateOne(
+				{ _id: new mongoose.Types.ObjectId(_id) },
+				{ $set: updatedPayment }
+			)
 
 			if (result.modifiedCount === 1) {
 				res.redirect(302, '/profile/payment-info')
 			} else {
-				res.status(400).json({ message: 'payment update failed' })
+				res.status(400).json({ message: 'Payment update failed' })
 			}
 		} catch (error) {
 			console.error('Error updating payment:', error)
 			res.status(500).json({ message: 'Error updating payment', error })
 		}
 	} else {
-		res.setHeader('Allow', ['GET'])
+		res.setHeader('Allow', ['POST'])
 		res.status(405).end(`Method ${req.method} Not Allowed`)
 	}
 }

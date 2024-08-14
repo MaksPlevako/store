@@ -1,11 +1,18 @@
-'use client' // Помечаем компонент как клиентский
+'use client'
 
 import { signIn } from 'next-auth/react'
+import { useState } from 'react'
 import Link from 'next/link'
 
 export default function Auth() {
-	const handleGoogleSignIn = () => {
-		signIn('google', { callbackUrl: '/profile/personal-info' })
+	const [error, setError] = useState('')
+
+	const handleGoogleSignIn = async () => {
+		try {
+			await signIn('google', { callbackUrl: '/profile/personal-info' })
+		} catch (error) {
+			setError('Ошибка при входе с Google')
+		}
 	}
 
 	const handleCredentialsSignIn = async event => {
@@ -14,11 +21,17 @@ export default function Auth() {
 		const email = formData.get('email')
 		const password = formData.get('password')
 
-		await signIn('credentials', {
-			callbackUrl: '/profile/personal-info',
+		const result = await signIn('credentials', {
+			redirect: false,
 			email,
 			password,
 		})
+
+		if (result.error) {
+			setError(result.error)
+		} else {
+			window.location.href = '/profile/personal-info'
+		}
 	}
 
 	return (
@@ -46,6 +59,9 @@ export default function Auth() {
 						onSubmit={handleCredentialsSignIn}
 						className='flex flex-col gap-5'
 					>
+						{error && (
+							<div className='text-red-500 text-center mb-4'>{error}</div>
+						)}
 						<div className='relative w-full'>
 							<input
 								type='email'
@@ -70,10 +86,6 @@ export default function Auth() {
 								*
 							</span>
 						</div>
-						{/* <div>
-							<input type='checkbox' name='save' className='w-4 h-4' />
-							<label className='ml-2'>Заповнити мене</label>
-						</div> */}
 						<button
 							type='submit'
 							className='border rounded bg-[#6B59CC] text-center text-white py-3 font-medium text-[18px]'

@@ -1,29 +1,27 @@
-import clientPromise from '@/lib/mongodb'
+import connectToDatabase from '@/lib/mongoose'
 import bcrypt from 'bcryptjs'
+import User from '@/models/User'
 
 export default async function Registration(req, res) {
+	await connectToDatabase()
 	if (req.method === 'POST') {
 		try {
-			const client = await clientPromise
-			const db = client.db('store')
-
 			const { name, phone, email, password } = req.body
 
 			// Проверка, существует ли пользователь с таким email
-			const existingUser = await db
-				.collection('users')
-				.findOne({ email: email })
+			const existingUser = await User.findOne({ email }).exec()
 
 			if (!existingUser) {
 				const hashedPassword = await bcrypt.hash(password, 10)
 
-				const result = await db.collection('users').insertOne({
+				const user = new User({
 					name,
 					phone,
 					email,
 					password: hashedPassword,
-					createdAt: new Date(),
 				})
+
+				const result = await user.save()
 
 				res.status(201).json({ message: 'Данные успешно сохранены', result })
 			} else {

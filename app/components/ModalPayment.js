@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 
-export default function ModalPayment({ email, changeModal }) {
+export default function ModalPayment({ user_id, changeModal }) {
 	const [formData, setFormData] = useState({
 		card_name: '',
 		card_num: '',
@@ -21,7 +21,7 @@ export default function ModalPayment({ email, changeModal }) {
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({ ...formData, email }),
+			body: JSON.stringify({ ...formData, user_id }),
 		})
 
 		const result = await response.json()

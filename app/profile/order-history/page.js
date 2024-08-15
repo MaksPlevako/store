@@ -15,19 +15,20 @@ export default async function OrderHistory() {
 
 	const orders = await resOrders.json()
 
-	if (!user) return null
 	if (!orders) return null
-
-	const uniqueStatuses = [...new Set(orders.map(order => order.status))]
 
 	return (
 		<ProfileLayout activeTab='order-history'>
-			<div>
-				<div className='text-2xl font-medium mb-4'>История заказов</div>
-				<div className='border rounded-lg bg-white shadow-2xl px-5 pt-5'>
-					<OrdersTable uniqueStatuses={uniqueStatuses} orders={orders} />
+			{orders.length > 0 ? (
+				<div>
+					<div className='text-2xl font-medium mb-4'>История заказов</div>
+					<div className='border rounded-lg bg-white shadow-2xl px-5 pt-5'>
+						<OrdersTable orders={orders} />
+					</div>
 				</div>
-			</div>
+			) : (
+				<div className='text-2xl font-medium'>Замовлень немає</div>
+			)}
 		</ProfileLayout>
 	)
 }

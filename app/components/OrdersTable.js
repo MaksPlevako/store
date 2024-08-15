@@ -4,10 +4,11 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 
-export default function OrdersTable({ uniqueStatuses, orders }) {
+export default function OrdersTable({ orders }) {
 	const [queryParams, setQueryParams] = useState({})
 	const searchParams = useSearchParams()
 	const statusFromQuery = queryParams.status || ''
+	const uniqueStatuses = [...new Set(orders.map(order => order.status))]
 
 	useEffect(() => {
 		if (typeof window !== 'undefined') {

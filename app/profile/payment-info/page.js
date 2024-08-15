@@ -25,37 +25,41 @@ export default async function PaymentInfo() {
 	return (
 		<ProfileLayout activeTab='payment-info'>
 			<div className='text-2xl font-medium mb-3.5'>Мои реквизиты</div>
-			<div className='border rounded bg-white p-7 shadow-2xl'>
-				<div className='grid grid-cols-2 gap-5 w-full'>
-					{payment.map(card => (
-						<div
-							key={card._id}
-							className='relative border rounded-2xl border-[#E3E3E8] p-5 flex flex-row gap-5 items-start shadow-lg'
-						>
-							<Image
-								src='/img/profile/card.svg'
-								alt='card'
-								width={32}
-								height={32}
-								className='w-auto h-auto border rounded-lg bg-white shadow-2xl p-1.5'
-							/>
-							<div>
-								<div className='text-[18px] font-medium mb-2'>
-									{card.card_name}
+			<div className='border rounded bg-white p-5 shadow-2xl'>
+				{payment.length > 0 ? (
+					<div className='grid grid-cols-2 gap-5 w-full'>
+						{payment.map(card => (
+							<div
+								key={card._id}
+								className='relative border rounded-2xl border-[#E3E3E8] p-5 flex flex-row gap-5 items-start shadow-lg'
+							>
+								<Image
+									src='/img/profile/card.svg'
+									alt='card'
+									width={32}
+									height={32}
+									className='w-auto h-auto border rounded-lg bg-white shadow-2xl p-1.5'
+								/>
+								<div>
+									<div className='text-[18px] font-medium mb-2'>
+										{card.card_name}
+									</div>
+									<div className='text-[#55556D]'>
+										{card.card_num.replace(/(.{4})/g, '$1 ')}
+									</div>
 								</div>
-								<div className='text-[#55556D]'>
-									{card.card_num.replace(/(.{4})/g, '$1 ')}
-								</div>
+								<ChangeCard
+									user_id={user._id}
+									card_num={card.card_num}
+									card_name={card.card_name}
+									_id={card._id}
+								/>
 							</div>
-							<ChangeCard
-								user_id={user._id}
-								card_num={card.card_num}
-								card_name={card.card_name}
-								_id={card._id}
-							/>
-						</div>
-					))}
-				</div>
+						))}
+					</div>
+				) : (
+					<div>Карт немає</div>
+				)}
 				<ButtonPayment user_id={user._id} />
 			</div>
 		</ProfileLayout>

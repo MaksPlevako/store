@@ -4,15 +4,21 @@ import { Rating } from '@mui/material'
 
 export default async function Battery({ params }) {
 	const resBattery = await fetch(
-		`http://localhost:3000/api/carBatteries?_id=${params.id}`,
-		{
-			next: {
-				revalidate: 0,
-			},
-		}
+		`http://localhost:3000/api/carBatteries?_id=${params.id}`
 	)
+
 	const battery = await resBattery.json()
+
+	const resComment = await fetch(
+		`https://localhost:3000/api/comments?product_id=${battery._id}`
+	)
+
+	const comments = await resComment.json()
+
+	console.log(comments)
+
 	if (!battery) return null
+	if (!comments) return null
 
 	return (
 		<section className='container mx-auto mt-5 mb-10'>
@@ -78,7 +84,7 @@ export default async function Battery({ params }) {
 								/>
 							</svg>
 							<span className='ms-1 text-sm font-medium text-gray-500'>
-								Акумулятор {battery[0].battery_name}
+								Акумулятор {battery.battery_name}
 							</span>
 						</div>
 					</li>
@@ -89,13 +95,20 @@ export default async function Battery({ params }) {
 					className='border rounded bg-white shadow-2xl p-5 flex flex-row '
 					key={bat._id}
 				>
-					<Image
-						src={bat.img}
-						alt={bat.article}
-						width={300}
-						height={300}
-						className='w-1/2 h-min mx-auto'
-					/>
+					<div>
+						<Image
+							src={bat.img}
+							alt={bat.article}
+							width={300}
+							height={300}
+							className='w-1/2 h-min mx-auto'
+						/>
+						{comments.length > 0 ? (
+							<CommentSlider comments={comments} />
+						) : (
+							<div>Коментарів немає</div>
+						)}
+					</div>
 					<div className='w-1/2'>
 						<div className='text-2xl font-medium mb-5'>{bat.title}</div>
 						<div className='flex flex-row justify-between items-center'>

@@ -53,7 +53,7 @@ export default async function handler(req, res) {
 					price: { $in: parseNumbers(parseArray(price)) },
 				}),
 				...(_id && {
-					_id: mongoose.Types.ObjectId(_id),
+					_id: new mongoose.Types.ObjectId(_id),
 				}),
 			}
 

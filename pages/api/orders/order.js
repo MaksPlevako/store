@@ -1,16 +1,13 @@
-import clientPromise from '@/lib/mongodb'
+import connectToDatabase from '@/lib/mongoose'
+import Orders from '@/models/Orders'
 
 export default async function handler(req, res) {
+	await connectToDatabase()
 	if (req.method === 'GET') {
 		try {
 			const { num } = req.query
 
-			const client = await clientPromise
-			const db = client.db('store')
-
-			const order = await db
-				.collection('orders')
-				.findOne({ num: parseInt(num, 10) })
+			const order = await Orders.findOne({ num: parseInt(num, 10) })
 
 			if (order) {
 				res.status(200).json(order)

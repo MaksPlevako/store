@@ -1,20 +1,20 @@
-import clientPromise from '@/lib/mongodb'
-import { ObjectId } from 'mongodb'
+import connectToDatabase from '@/lib/mongoose'
+import Orders from '@/models/Orders'
+import mongoose from 'mongoose'
 
 export default async function handler(req, res) {
+	await connectToDatabase()
 	if (req.method === 'GET') {
 		try {
-			const { userId } = req.query
+			const { user_id } = req.query
 
-			const client = await clientPromise
-			const db = client.db('store')
+			if (!mongoose.Types.ObjectId.isValid(user_id)) {
+				return res.status(400).json({ message: 'Invalid address ID' })
+			}
 
-			const orders = await db
-				.collection('orders')
-				.find({ user_id: new ObjectId(userId) })
-				.toArray()
+			const orders = await Orders.find({ user_id }).exec()
 
-			if (orders) {
+			if (orders.length > 0) {
 				res.status(200).json(orders)
 			} else {
 				res.status(404).json({ message: 'Orders not found' })

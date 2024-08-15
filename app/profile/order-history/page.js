@@ -5,16 +5,20 @@ import OrdersTable from '@/app/components/OrdersTable'
 export default async function OrderHistory() {
 	const session = await auth()
 	const resUser = await fetch(
-		`http://localhost:3000/api/user/${session.user.email}`
+		`http://localhost:3000/api/user/user?email=${session.user.email}`
 	)
 	const user = await resUser.json()
 
-	const resOrders = await fetch(`http://localhost:3000/api/orders/${user._id}`)
+	const resOrders = await fetch(
+		`http://localhost:3000/api/orders/orders?user_id=${user._id}`
+	)
 
 	const orders = await resOrders.json()
-	const uniqueStatuses = [...new Set(orders.map(order => order.status))]
 
 	if (!user) return null
+	if (!orders) return null
+
+	const uniqueStatuses = [...new Set(orders.map(order => order.status))]
 
 	return (
 		<ProfileLayout activeTab='order-history'>

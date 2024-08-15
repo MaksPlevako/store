@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export default async function Order({ params }) {
 	const resOrders = await fetch(
-		`http://localhost:3000/api/orders/num/${params.num}`,
+		`http://localhost:3000/api/orders/order?num=${params.num}`,
 		{
 			next: {
 				revalidate: 0,

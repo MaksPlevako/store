@@ -4,6 +4,7 @@ import Comments from '@/models/Comments'
 
 export default async (req, res) => {
 	await connectToDatabase()
+
 	if (req.method === 'GET') {
 		try {
 			const { product_id } = req.query
@@ -13,16 +14,16 @@ export default async (req, res) => {
 			}
 
 			const comments = await Comments.find({ product_id })
+				.populate('user_id', 'name') // Подразумевается, что у пользователя есть поле `name`
+				.exec()
 
-			console.log(comments)
-
-			if (comments) {
-				res.status(200).json(comments)
+			if (comments.length > 0) {
+				return res.status(200).json(comments)
 			} else {
-				res.status(404).json({ message: 'Comments not found' })
+				return res.status(404).json({ message: 'Comments not found' })
 			}
 		} catch (errors) {
-			res.status(500).json({ errors: errors.map(error => error.message) })
+			return res.status(500).json({ errors: errors.message })
 		}
 	} else {
 		res.setHeader('Allow', ['POST', 'DELETE', 'GET'])

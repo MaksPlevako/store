@@ -12,7 +12,14 @@ export default async function Lights({ params }) {
 		}
 	)
 	const lights = await resLights.json()
+
+	const resComment = await fetch(
+		`http://localhost:3000/api/comments?product_id=${params.id}`
+	)
+
+	const comments = await resComment.json()
 	if (!lights) return null
+	if (!comments) return null
 
 	return (
 		<section className='container mx-auto mt-5 mb-10'>
@@ -46,9 +53,9 @@ export default async function Lights({ params }) {
 							>
 								<path
 									stroke='currentColor'
-									stroke-linecap='round'
-									stroke-linejoin='round'
-									stroke-width='2'
+									strokeLinecap='round'
+									strokeLinejoin='round'
+									strokeWidth='2'
 									d='m1 9 4-4-4-4'
 								/>
 							</svg>
@@ -71,9 +78,9 @@ export default async function Lights({ params }) {
 							>
 								<path
 									stroke='currentColor'
-									stroke-linecap='round'
-									stroke-linejoin='round'
-									stroke-width='2'
+									strokeLinecap='round'
+									strokeLinejoin='round'
+									strokeWidth='2'
 									d='m1 9 4-4-4-4'
 								/>
 							</svg>
@@ -89,13 +96,24 @@ export default async function Lights({ params }) {
 					className='border rounded bg-white shadow-2xl p-5 flex flex-row '
 					key={light._id}
 				>
-					<Image
-						src={light.img}
-						alt={light.article}
-						width={300}
-						height={300}
-						className='w-2/5 h-min mx-auto'
-					/>
+					<div className='w-1/2 mx-auto'>
+						<Image
+							src={light.img}
+							alt={light.article}
+							width={300}
+							height={300}
+							className='w-1/2 h-min mx-auto'
+						/>
+						{comments.length > 0 ? (
+							<div className='w-full h-min'>
+								<CommentSlider comments={comments} />
+							</div>
+						) : (
+							<div className='text-2xl font-medium text-center mt-14'>
+								Коментарів немає
+							</div>
+						)}
+					</div>
 					<div className='w-1/2'>
 						<div className='text-2xl font-medium mb-5'>{light.title}</div>
 						<div className='flex flex-row justify-between items-center'>

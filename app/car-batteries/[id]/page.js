@@ -1,21 +1,25 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Rating } from '@mui/material'
+import CommentSlider from '@/app/components/CommentSlider'
 
 export default async function Battery({ params }) {
 	const resBattery = await fetch(
-		`http://localhost:3000/api/carBatteries?_id=${params.id}`
+		`http://localhost:3000/api/carBatteries?_id=${params.id}`,
+		{
+			next: {
+				revalidate: 0,
+			},
+		}
 	)
 
 	const battery = await resBattery.json()
 
 	const resComment = await fetch(
-		`https://localhost:3000/api/comments?product_id=${battery._id}`
+		`http://localhost:3000/api/comments?product_id=${params.id}`
 	)
 
 	const comments = await resComment.json()
-
-	console.log(comments)
 
 	if (!battery) return null
 	if (!comments) return null
@@ -52,9 +56,9 @@ export default async function Battery({ params }) {
 							>
 								<path
 									stroke='currentColor'
-									stroke-linecap='round'
-									stroke-linejoin='round'
-									stroke-width='2'
+									strokeLinecap='round'
+									strokeLinejoin='round'
+									strokeWidth='2'
 									d='m1 9 4-4-4-4'
 								/>
 							</svg>
@@ -77,9 +81,9 @@ export default async function Battery({ params }) {
 							>
 								<path
 									stroke='currentColor'
-									stroke-linecap='round'
-									stroke-linejoin='round'
-									stroke-width='2'
+									strokeLinecap='round'
+									strokeLinejoin='round'
+									strokeWidth='2'
 									d='m1 9 4-4-4-4'
 								/>
 							</svg>
@@ -95,18 +99,22 @@ export default async function Battery({ params }) {
 					className='border rounded bg-white shadow-2xl p-5 flex flex-row '
 					key={bat._id}
 				>
-					<div>
+					<div className='w-1/2 mx-auto'>
 						<Image
 							src={bat.img}
 							alt={bat.article}
 							width={300}
 							height={300}
-							className='w-1/2 h-min mx-auto'
+							className='h-min w-full'
 						/>
 						{comments.length > 0 ? (
-							<CommentSlider comments={comments} />
+							<div className='w-full h-min'>
+								<CommentSlider comments={comments} />
+							</div>
 						) : (
-							<div>Коментарів немає</div>
+							<div className='text-2xl font-medium text-center mt-14'>
+								Коментарів немає
+							</div>
 						)}
 					</div>
 					<div className='w-1/2'>

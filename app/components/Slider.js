@@ -40,7 +40,7 @@ export default function Slider() {
 		<Swiper
 			navigation
 			pagination={{ type: 'bullets', clickable: true }}
-			autoplay={false}
+			autoplay={true}
 			loop={true}
 			modules={[Autoplay, Navigation, Pagination]}
 			className='pagi'

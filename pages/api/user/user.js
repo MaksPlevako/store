@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
 	if (req.method === 'GET') {
 		try {
-			const user = await User.findOne({ email }).exec()
+			const user = await User.findOne({ email })
 
 			if (user) {
 				const { password, ...userWithoutPass } = user.toObject()

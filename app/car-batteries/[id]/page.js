@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Rating } from '@mui/material'
+import SetFeedback from '@/app/components/SetFeedback'
 import CommentSlider from '@/app/components/CommentSlider'
 
 export default async function Battery({ params }) {
@@ -120,14 +120,7 @@ export default async function Battery({ params }) {
 					<div className='w-1/2'>
 						<div className='text-2xl font-medium mb-5'>{bat.title}</div>
 						<div className='flex flex-row justify-between items-center'>
-							<Rating
-								name='read-only'
-								size='medium'
-								value={bat.rating}
-								precision={0.5}
-								readOnly
-								className=''
-							/>
+							<SetFeedback rating={bat.rating} _id={bat._id} />
 							<div className='text-gray-600'>
 								Артикул: <span className='text-blue-700'>{bat.article}</span>
 							</div>

@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Rating } from '@mui/material'
+import SetFeedback from '@/app/components/SetFeedback'
+import CommentSlider from '@/app/components/CommentSlider'
 
 export default async function Rims({ params }) {
 	const resRims = await fetch(
@@ -117,14 +118,7 @@ export default async function Rims({ params }) {
 					<div className='w-1/2'>
 						<div className='text-2xl font-medium mb-5'>{rim.title}</div>
 						<div className='flex flex-row justify-between items-center'>
-							<Rating
-								name='read-only'
-								size='medium'
-								value={rim.rating}
-								precision={0.5}
-								readOnly
-								className=''
-							/>
+							<SetFeedback rating={rim.rating} _id={rim._id} />
 							<div className='text-gray-600'>
 								Артикул: <span className='text-blue-700'>{rim.article}</span>
 							</div>

@@ -25,6 +25,39 @@ export default async (req, res) => {
 		} catch (errors) {
 			return res.status(500).json({ errors: errors.message })
 		}
+	} else if (req.method === 'POST') {
+		try {
+			console.log(req.body)
+
+			const { product_id, user_id, rating, comment } = req.body
+
+			console.log(product_id)
+			console.log(user_id)
+			console.log(rating)
+			console.log(comment)
+
+			if (!mongoose.Types.ObjectId.isValid(product_id)) {
+				return res.status(400).json({ message: 'Invalid product ID' })
+			}
+			if (!mongoose.Types.ObjectId.isValid(user_id)) {
+				return res.status(400).json({ message: 'Invalid user ID' })
+			}
+
+			const newComment = new Comments({
+				product_id,
+				user_id,
+				rating,
+				comment,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+			})
+
+			await newComment.save()
+
+			res.status(201).json({ message: 'Address added successfully' })
+		} catch (error) {
+			return res.status(500).json({ message: error.message })
+		}
 	} else {
 		res.setHeader('Allow', ['POST', 'DELETE', 'GET'])
 		res.status(405).end(`Method ${req.method} Not Allowed`)

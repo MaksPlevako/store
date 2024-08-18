@@ -13,7 +13,7 @@ const carBatteriesSchema = new mongoose.Schema(
 		series: { type: String },
 		price: { type: Number, required: true },
 		img: { type: String },
-		rating: { type: Number },
+		average_rating: { type: Number },
 	},
 	{ collection: 'car_batteries' }
 )

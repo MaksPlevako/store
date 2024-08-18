@@ -118,7 +118,11 @@ export default async function Lights({ params }) {
 					<div className='w-1/2'>
 						<div className='text-2xl font-medium mb-5'>{light.title}</div>
 						<div className='flex flex-row justify-between items-center'>
-							<SetFeedback rating={light.rating} _id={light._id} />
+							<SetFeedback
+								rating={light.average_rating}
+								_id={light._id}
+								product_type={'carLights'}
+							/>
 							<div className='text-gray-600'>
 								Артикул: <span className='text-blue-700'>{light.article}</span>
 							</div>

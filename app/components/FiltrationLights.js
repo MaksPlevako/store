@@ -35,7 +35,14 @@ export default function FiltrationLights({ lights, response }) {
 	useEffect(() => {
 		if (response) {
 			const uniqueValuesByProperty = property => {
-				return [...new Set(lights.map(light => light[property]))]
+				if (!property || property.trim() === '') {
+					return [] // Возвращаем пустой массив, если свойство пустое
+				}
+				// Фильтруем объекты, чтобы включать только те, где свойство существует и является непустой строкой
+				const filteredValues = lights
+					.map(light => light[property])
+					.filter(value => typeof value === 'string' && value.trim() !== '') // Проверяем, что значение строка и не пустое
+				return [...new Set(filteredValues)]
 			}
 
 			setUniqueValues({
@@ -240,9 +247,9 @@ export default function FiltrationLights({ lights, response }) {
 					))}
 					<div className='my-5 border border-gray-300 w-full' />
 					<div className='text-[18px] font-medium'>Цоколь</div>
-					{uniqueValues.socle.map(socle => (
+					{uniqueValues.socle.map((socle, index) => (
 						<div
-							key={socle}
+							key={index}
 							className='my-1.5 flex flex-row gap-2.5 items-center'
 						>
 							<input

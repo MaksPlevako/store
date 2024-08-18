@@ -7,7 +7,7 @@ export default function RimsSection({ rims }) {
 			{rims.map(rim => (
 				<Link
 					href={`/rims/${rim._id}`}
-					className='border rounded bg-white shadow-2xl p-5 group relative'
+					className='border rounded bg-white shadow-2xl p-5 group relative flex flex-col h-[550px]'
 					key={rim._id}
 				>
 					<Image
@@ -17,14 +17,14 @@ export default function RimsSection({ rims }) {
 						height={260}
 						className='mx-auto'
 					/>
-					<div>
-						<div className='text-[18px] font-medium'>{rim.rims_name}</div>
+					<div className='flex flex-col justify-between h-1/3 mt-2'>
+						<div className='text-2xl font-medium'>{rim.rims_name}</div>
 						<div className='my-1.5'>{rim.title}</div>
 						<div className='text-[#7A7680]'>
 							Артикул:
 							<span className='text-[#453888]'>{rim.article}</span>
 						</div>
-						<button className='border rounded w-full py-2.5 mt-3 font-medium text-[#6B59CC] bg-[#5946D7] border-[#5946D7] bg-opacity-10 hover:bg-opacity-100 hover:text-white transition-all'>
+						<button className='absolute left-1/2 -translate-x-1/2 bottom-5 border rounded w-11/12 py-2.5 font-medium text-[#6B59CC] bg-[#5946D7] border-[#5946D7] bg-opacity-10 hover:bg-opacity-100 hover:text-white transition-all'>
 							Ціна: {rim.price}$
 						</button>
 						<div className='hidden group-hover:block absolute left-0 top-full bg-white text-[#7A7680] px-5 pb-5 z-50 border rounded-b-lg shadow-2xl transition-all ease-in-out duration-1000'>

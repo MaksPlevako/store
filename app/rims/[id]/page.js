@@ -97,7 +97,7 @@ export default async function Rims({ params }) {
 					className='border rounded bg-white shadow-2xl p-5 flex flex-row '
 					key={rim._id}
 				>
-					<div className='w-1/2 mx-auto'>
+					<div className='w-1/2 mx-auto flex flex-col justify-around items-center'>
 						<Image
 							src={rim.img}
 							alt={rim.article}
@@ -118,7 +118,11 @@ export default async function Rims({ params }) {
 					<div className='w-1/2'>
 						<div className='text-2xl font-medium mb-5'>{rim.title}</div>
 						<div className='flex flex-row justify-between items-center'>
-							<SetFeedback rating={rim.rating} _id={rim._id} />
+							<SetFeedback
+								rating={rim.average_rating}
+								_id={rim._id}
+								product_type={'rims'}
+							/>
 							<div className='text-gray-600'>
 								Артикул: <span className='text-blue-700'>{rim.article}</span>
 							</div>

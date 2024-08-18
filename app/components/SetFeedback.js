@@ -5,7 +5,7 @@ import { Rating } from '@mui/material'
 import ModalFeedback from './ModalFeedback'
 import { useSession } from 'next-auth/react'
 
-export default function SetFeedback({ rating, _id }) {
+export default function SetFeedback({ rating, _id, product_type }) {
 	const { data: session } = useSession()
 	const [open, setOpen] = useState(false)
 
@@ -23,7 +23,12 @@ export default function SetFeedback({ rating, _id }) {
 				onClick={() => setOpen(true)}
 			/>
 			{open && (
-				<ModalFeedback _id={_id} changeModal={changeModal} session={session} />
+				<ModalFeedback
+					_id={_id}
+					changeModal={changeModal}
+					session={session}
+					product_type={product_type}
+				/>
 			)}
 		</div>
 	)

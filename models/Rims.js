@@ -13,7 +13,7 @@ const rimsSchema = new mongoose.Schema(
 		rims_material: { type: String },
 		color: { type: String },
 		price: { type: Number, required: true },
-		rating: { type: Number, min: 0, max: 5 },
+		average_rating: { type: Number, min: 0, max: 5 },
 		img: { type: String },
 	},
 	{ collection: 'rims' }

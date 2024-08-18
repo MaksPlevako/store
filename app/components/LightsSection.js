@@ -26,11 +26,9 @@ export default function LightsSection({ lights }) {
 							Артикул:
 							<span className='text-[#453888]'>{light.article}</span>
 						</div>
-
 						<button className='absolute left-1/2 -translate-x-1/2 bottom-5 border rounded w-11/12 py-2.5 font-medium text-[#6B59CC] bg-[#5946D7] border-[#5946D7] bg-opacity-10 hover:bg-opacity-100 hover:text-white transition-all'>
 							Ціна: {light.price}$
 						</button>
-
 						<div className='hidden group-hover:block absolute left-0 top-full w-full bg-white text-[#7A7680] px-5 pb-5 z-50 border rounded-b-lg shadow-2xl transition-all ease-in-out duration-1000'>
 							<div className='border bg-gray-300 w-full' />
 							<div>

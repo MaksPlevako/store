@@ -2,10 +2,16 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Rating } from '@mui/material'
 
-export default function ModalFeedback({ _id, changeModal, session }) {
+export default function ModalFeedback({
+	_id,
+	changeModal,
+	session,
+	product_type,
+}) {
 	const [value, setValue] = useState(0)
 	const [formData, setFormData] = useState({
 		product_id: _id,
+		product_type: product_type,
 		user_id: null,
 		rating: value,
 		comment: '',

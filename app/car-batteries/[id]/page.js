@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import SetFeedback from '@/app/components/SetFeedback'
 import CommentSlider from '@/app/components/CommentSlider'
+import CarBatteries from '../page'
 
 export default async function Battery({ params }) {
 	const resBattery = await fetch(
@@ -120,7 +121,11 @@ export default async function Battery({ params }) {
 					<div className='w-1/2'>
 						<div className='text-2xl font-medium mb-5'>{bat.title}</div>
 						<div className='flex flex-row justify-between items-center'>
-							<SetFeedback rating={bat.rating} _id={bat._id} />
+							<SetFeedback
+								rating={bat.average_rating}
+								_id={bat._id}
+								product_type={'carBatteries'}
+							/>
 							<div className='text-gray-600'>
 								Артикул: <span className='text-blue-700'>{bat.article}</span>
 							</div>

@@ -1,6 +1,9 @@
 import connectToDatabase from '@/lib/mongoose'
 import mongoose from 'mongoose'
 import Comments from '@/models/Comments'
+import CarLights from '@/models/CarLights'
+import CarBatteries from '@/models/CarBatteries'
+import Rims from '@/models/Rims'
 
 export default async (req, res) => {
 	await connectToDatabase()
@@ -27,14 +30,7 @@ export default async (req, res) => {
 		}
 	} else if (req.method === 'POST') {
 		try {
-			console.log(req.body)
-
-			const { product_id, user_id, rating, comment } = req.body
-
-			console.log(product_id)
-			console.log(user_id)
-			console.log(rating)
-			console.log(comment)
+			const { product_id, product_type, user_id, rating, comment } = req.body
 
 			if (!mongoose.Types.ObjectId.isValid(product_id)) {
 				return res.status(400).json({ message: 'Invalid product ID' })
@@ -54,9 +50,45 @@ export default async (req, res) => {
 
 			await newComment.save()
 
-			res.status(201).json({ message: 'Address added successfully' })
+			const modelsMap = {
+				rims: Rims,
+				carLights: CarLights,
+				carBatteries: CarBatteries,
+			}
+
+			const ProductModel = modelsMap[product_type]
+
+			console.log(ProductModel)
+
+			if (!ProductModel) {
+				return res.status(400).json({ message: 'Invalid product type' })
+			}
+
+			const product = await ProductModel.findById(product_id)
+
+			if (!product) {
+				return res.status(404).json({ message: 'Product not found' })
+			}
+
+			const comments = await Comments.find({ product_id })
+			const totalRatings = comments.length
+			const sumOfRatings = comments.reduce(
+				(acc, comment) => acc + comment.rating,
+				0
+			)
+			const newAverageRating = sumOfRatings / totalRatings
+
+			// Обновляем среднюю оценку товара
+			product.average_rating = newAverageRating
+			await product.save()
+
+			res
+				.status(201)
+				.json({ message: 'Comment added and rating updated successfully' })
 		} catch (error) {
-			return res.status(500).json({ message: error.message })
+			console.log(error)
+
+			return res.status(500).json({ message: error })
 		}
 	} else {
 		res.setHeader('Allow', ['POST', 'DELETE', 'GET'])

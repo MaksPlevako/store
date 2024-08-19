@@ -31,7 +31,18 @@ export default function FiltrationBatteries({ batteries, response }) {
 	useEffect(() => {
 		if (response) {
 			const uniqueValuesByProperty = property => {
-				return [...new Set(batteries.map(battery => battery[property]))]
+				if (!property || property.trim() === '') {
+					return []
+				}
+
+				const filteredValues = batteries
+					.map(batteries => batteries[property])
+					.filter(
+						value =>
+							(typeof value === 'string' && value.trim() !== '') ||
+							(typeof value === 'number' && !isNaN(value))
+					)
+				return [...new Set(filteredValues)]
 			}
 
 			setUniqueValues({
@@ -108,7 +119,7 @@ export default function FiltrationBatteries({ batteries, response }) {
 	return (
 		<form onSubmit={handleSubmit}>
 			{response ? (
-				<div>
+				<div className='overflow-y-scroll overscroll-auto h-screen'>
 					<div className='text-[18px] font-medium'>Бренд</div>
 					{uniqueValues.battery_name.map(brand => (
 						<div
@@ -349,17 +360,16 @@ export default function FiltrationBatteries({ batteries, response }) {
 							</svg>
 						</div>
 					))}
-
-					<button
-						type='submit'
-						className='mt-4 border bg-blue-500 text-white py-3.5 px-4 rounded w-full text-lg font-medium hover:bg-white hover:text-black transition-all duration-500 ease-in-out'
-					>
-						Підтвердити фільтри
-					</button>
 				</div>
 			) : (
 				<div>Фільтри недоступні</div>
 			)}
+			<button
+				type='submit'
+				className='mt-4 border bg-blue-500 text-white py-3.5 px-4 rounded w-full text-lg font-medium hover:bg-white hover:text-black transition-all duration-500 ease-in-out'
+			>
+				Підтвердити фільтри
+			</button>
 			<button
 				type='button'
 				className='mt-4 border bg-blue-500 text-white py-3.5 px-4 rounded w-full text-lg font-medium hover:bg-white hover:text-black transition-all easy-in-out duration-500'

@@ -36,12 +36,16 @@ export default function FiltrationLights({ lights, response }) {
 		if (response) {
 			const uniqueValuesByProperty = property => {
 				if (!property || property.trim() === '') {
-					return [] // Возвращаем пустой массив, если свойство пустое
+					return []
 				}
-				// Фильтруем объекты, чтобы включать только те, где свойство существует и является непустой строкой
+
 				const filteredValues = lights
 					.map(light => light[property])
-					.filter(value => typeof value === 'string' && value.trim() !== '') // Проверяем, что значение строка и не пустое
+					.filter(
+						value =>
+							(typeof value === 'string' && value.trim() !== '') ||
+							(typeof value === 'number' && !isNaN(value))
+					)
 				return [...new Set(filteredValues)]
 			}
 
@@ -123,7 +127,7 @@ export default function FiltrationLights({ lights, response }) {
 	return (
 		<form onSubmit={handleSubmit}>
 			{response ? (
-				<div>
+				<div className='overflow-y-scroll overscroll-auto h-screen scroll-smooth'>
 					<div className='text-[18px] font-medium'>Бренд</div>
 					{uniqueValues.brand.map(brand => (
 						<div
@@ -397,9 +401,9 @@ export default function FiltrationLights({ lights, response }) {
 					))}
 					<div className='my-5 border border-gray-300 w-full' />
 					<div className='text-[18px] font-medium'>Ціна</div>
-					{uniqueValues.price.map(price => (
+					{uniqueValues.price.map((price, index) => (
 						<div
-							key={price}
+							key={index}
 							className='my-1.5 flex flex-row gap-2.5 items-center'
 						>
 							<input
@@ -425,17 +429,16 @@ export default function FiltrationLights({ lights, response }) {
 							</svg>
 						</div>
 					))}
-
-					<button
-						type='submit'
-						className='mt-4 border bg-blue-500 text-white py-3.5 px-4 rounded w-full text-lg font-medium hover:bg-white hover:text-black transition-all duration-500 ease-in-out'
-					>
-						Підтвердити фільтри
-					</button>
 				</div>
 			) : (
 				<div>Фільтри недоступні</div>
 			)}
+			<button
+				type='submit'
+				className='mt-4 border bg-blue-500 text-white py-3.5 px-4 rounded w-full text-lg font-medium hover:bg-white hover:text-black transition-all duration-500 ease-in-out'
+			>
+				Підтвердити фільтри
+			</button>
 			<button
 				type='button'
 				className='mt-4 border bg-blue-500 text-white py-3.5 px-4 rounded w-full text-lg font-medium hover:bg-white hover:text-black transition-all easy-in-out duration-500'

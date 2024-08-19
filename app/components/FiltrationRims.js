@@ -33,7 +33,18 @@ export default function FiltrationRims({ rims, response }) {
 	useEffect(() => {
 		if (response) {
 			const uniqueValuesByProperty = property => {
-				return [...new Set(rims.map(rim => rim[property]))]
+				if (!property || property.trim() === '') {
+					return []
+				}
+
+				const filteredValues = rims
+					.map(rims => rims[property])
+					.filter(
+						value =>
+							(typeof value === 'string' && value.trim() !== '') ||
+							(typeof value === 'number' && !isNaN(value))
+					)
+				return [...new Set(filteredValues)]
 			}
 
 			setUniqueValues({
@@ -112,7 +123,7 @@ export default function FiltrationRims({ rims, response }) {
 	return (
 		<form onSubmit={handleSubmit}>
 			{response ? (
-				<div>
+				<div className='overflow-y-scroll overscroll-auto h-screen'>
 					<div className='text-[18px] font-medium'>Бренд</div>
 					{uniqueValues.rims_name.map(brand => (
 						<div

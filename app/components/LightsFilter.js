@@ -2,36 +2,19 @@ import LightsSection from './LightsSection'
 import FiltrationLights from './FiltrationLights'
 
 export default async function LightsFilter({ searchParams }) {
-	const brand = Array.isArray(searchParams.brand)
-		? searchParams.brand.join(',')
-		: searchParams.brand || ''
-	const type = Array.isArray(searchParams.type)
-		? searchParams.type.join(',')
-		: searchParams.type || ''
-	const lamp_kind = Array.isArray(searchParams.lamp_kind)
-		? searchParams.lamp_kind.join(',')
-		: searchParams.lamp_kind || ''
-	const color_temperature = Array.isArray(searchParams.color_temperature)
-		? searchParams.color_temperature.join(',')
-		: searchParams.color_temperature || ''
-	const socle = Array.isArray(searchParams.socle)
-		? searchParams.socle.join(',')
-		: searchParams.socle || ''
-	const assignment = Array.isArray(searchParams.assignment)
-		? searchParams.assignment.join(',')
-		: searchParams.assignment || ''
-	const power = Array.isArray(searchParams.power)
-		? searchParams.power.join(',')
-		: searchParams.power || ''
-	const voltage = Array.isArray(searchParams.voltage)
-		? searchParams.voltage.join(',')
-		: searchParams.voltage || ''
-	const color = Array.isArray(searchParams.color)
-		? searchParams.color.join(',')
-		: searchParams.color || ''
-	const price = Array.isArray(searchParams.price)
-		? searchParams.price.join(',')
-		: searchParams.price || ''
+	const joinOrEmpty = param =>
+		Array.isArray(param) ? param.join(',') : param || ''
+
+	const brand = joinOrEmpty(searchParams.brand)
+	const type = joinOrEmpty(searchParams.type)
+	const lamp_kind = joinOrEmpty(searchParams.lamp_kind)
+	const color_temperature = joinOrEmpty(searchParams.color_temperature)
+	const socle = joinOrEmpty(searchParams.socle)
+	const assignment = joinOrEmpty(searchParams.assignment)
+	const power = joinOrEmpty(searchParams.power)
+	const voltage = joinOrEmpty(searchParams.voltage)
+	const color = joinOrEmpty(searchParams.color)
+	const price = joinOrEmpty(searchParams.price)
 
 	const queryParams = new URLSearchParams({
 		brand,
@@ -60,7 +43,7 @@ export default async function LightsFilter({ searchParams }) {
 
 	return (
 		<div className='flex flex-row gap-5 relative'>
-			<aside className='w-[350px] border rounded bg-white shadow-2xl p-5'>
+			<aside className='w-[350px] border rounded bg-white shadow-2xl p-5 h-min'>
 				<FiltrationLights lights={lights} response={resLights.ok} />
 			</aside>
 			{resLights.ok ? (

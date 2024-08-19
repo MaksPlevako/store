@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export default function BatteriesSection({ batteries }) {
 	return (
-		<main className='w-full grid grid-cols-3 gap-x-2.5 gap-y-5 h-min'>
+		<main className='w-3/4 grid grid-cols-3 gap-x-2.5 gap-y-5 h-min'>
 			{batteries.map(battery => (
 				<Link
 					href={`/car-batteries/${battery._id}`}

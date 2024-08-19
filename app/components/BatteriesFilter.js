@@ -2,30 +2,17 @@ import BatteriesSection from './BatteriesSection'
 import FiltrationBatteries from './FiltrationBatteries'
 
 export default async function BatteriesFilter({ searchParams }) {
-	const battery_name = Array.isArray(searchParams.battery_name)
-		? searchParams.battery_name.join(',')
-		: searchParams.battery_name || ''
-	const battery_capacity = Array.isArray(searchParams.battery_capacity)
-		? searchParams.battery_capacity.join(',')
-		: searchParams.battery_capacity || ''
-	const terminals = Array.isArray(searchParams.terminals)
-		? searchParams.terminals.join(',')
-		: searchParams.terminals || ''
-	const battery_mount = Array.isArray(searchParams.battery_mount)
-		? searchParams.battery_mount.join(',')
-		: searchParams.battery_mount || ''
-	const voltage = Array.isArray(searchParams.voltage)
-		? searchParams.voltage.join(',')
-		: searchParams.voltage || ''
-	const terminal_arrangement = Array.isArray(searchParams.terminal_arrangement)
-		? searchParams.terminal_arrangement.join(',')
-		: searchParams.terminal_arrangement || ''
-	const series = Array.isArray(searchParams.series)
-		? searchParams.series.join(',')
-		: searchParams.series || ''
-	const price = Array.isArray(searchParams.price)
-		? searchParams.price.join(',')
-		: searchParams.price || ''
+	const joinOrEmpty = param =>
+		Array.isArray(param) ? param.join(',') : param || ''
+
+	const battery_name = joinOrEmpty(searchParams.battery_name)
+	const battery_capacity = joinOrEmpty(searchParams.battery_capacity)
+	const terminals = joinOrEmpty(searchParams.terminals)
+	const battery_mount = joinOrEmpty(searchParams.battery_mount)
+	const voltage = joinOrEmpty(searchParams.voltage)
+	const terminal_arrangement = joinOrEmpty(searchParams.terminal_arrangement)
+	const series = joinOrEmpty(searchParams.series)
+	const price = joinOrEmpty(searchParams.price)
 
 	const queryParams = new URLSearchParams({
 		battery_name,
@@ -52,7 +39,7 @@ export default async function BatteriesFilter({ searchParams }) {
 
 	return (
 		<div className='flex flex-row gap-5 relative'>
-			<aside className='w-[350px] border rounded bg-white shadow-2xl p-5'>
+			<aside className='w-[350px] border rounded bg-white shadow-2xl p-5 h-min'>
 				<FiltrationBatteries batteries={batteries} response={resBattery.ok} />
 			</aside>
 			{resBattery.ok ? (

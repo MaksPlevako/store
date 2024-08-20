@@ -4,6 +4,7 @@ import Comments from '@/models/Comments'
 import CarLights from '@/models/CarLights'
 import CarBatteries from '@/models/CarBatteries'
 import Rims from '@/models/Rims'
+import Autochemistry from '@/models/Autochemistry'
 
 export default async (req, res) => {
 	await connectToDatabase()
@@ -54,6 +55,7 @@ export default async (req, res) => {
 				rims: Rims,
 				carLights: CarLights,
 				carBatteries: CarBatteries,
+				autochemistry: Autochemistry,
 			}
 
 			const ProductModel = modelsMap[product_type]

@@ -53,8 +53,8 @@ export default function ModalCategories({ changeModal }) {
 						className='flex flex-row items-center border bg-slate-50 py-5 px-8 hover:scale-105 ease-in-out transition'
 					>
 						<Image
-							src='img\menu\front-door-part-sqaure.svg'
-							alt='front-door-part-sqaure'
+							src='\img\menu\front-door.svg'
+							alt='front-door'
 							width={32}
 							height={32}
 						/>
@@ -82,14 +82,14 @@ export default function ModalCategories({ changeModal }) {
 							width={32}
 							height={32}
 						/>
-						<div className='ml-5'>Автостікла</div>
+						<div className='ml-5'>Автоскло</div>
 					</Link>
 					<Link
 						href='/categories/brakes'
 						className='flex flex-row items-center border bg-slate-50 py-5 px-8 hover:scale-105 ease-in-out transition'
 					>
-						<Image src='/img/menu/oil.svg' alt='oil' width={48} height={48} />
-						<div className='ml-5'>Автомасла</div>
+						<Image src='/img/menu/oil.svg' alt='oil' width={32} height={32} />
+						<div className='ml-5'>Автомастила</div>
 					</Link>
 					<Link
 						href='/autochemistry'
@@ -113,7 +113,7 @@ export default function ModalCategories({ changeModal }) {
 							width={32}
 							height={32}
 						/>
-						<div className='ml-5'>Діски</div>
+						<div className='ml-5'>Диски</div>
 					</Link>
 					<Link
 						href='/car-batteries'

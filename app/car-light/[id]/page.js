@@ -121,6 +121,7 @@ export default async function Lights({ params }) {
 							<SetFeedback
 								rating={light.average_rating}
 								_id={light._id}
+								comments={comments.length}
 								product_type={'carLights'}
 							/>
 							<div className='text-gray-600'>

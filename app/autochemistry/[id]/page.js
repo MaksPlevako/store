@@ -123,6 +123,7 @@ export default async function Lights({ params }) {
 							<SetFeedback
 								rating={autochemistry.average_rating}
 								_id={autochemistry._id}
+								comments={comments.length}
 								product_type={'autochemistry'}
 							/>
 							<div className='text-gray-600'>

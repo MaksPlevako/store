@@ -121,6 +121,7 @@ export default async function Rims({ params }) {
 							<SetFeedback
 								rating={rim.average_rating}
 								_id={rim._id}
+								comments={comments.length}
 								product_type={'rims'}
 							/>
 							<div className='text-gray-600'>

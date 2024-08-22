@@ -118,6 +118,7 @@ export default function ModalFeedback({
 								autoFocus
 								className='w-full'
 								onChange={handleChange}
+								required
 							/>
 							<button
 								type='submit'

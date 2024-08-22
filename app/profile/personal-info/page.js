@@ -25,7 +25,7 @@ export default async function PersonalInfo() {
 							defaultValue={user.name}
 							required
 						/>
-						<label className='absolute text-sm text-[#55556D] duration-300 -top-2.5 left-3 z-10 scale-90 bg-white'>
+						<label className='absolute text-sm text-[#55556D] duration-300 -top-2.5 left-3 scale-90 bg-white'>
 							Фамілія та Ім'я
 						</label>
 					</div>
@@ -37,7 +37,7 @@ export default async function PersonalInfo() {
 							defaultValue={user.phone}
 							required
 						/>
-						<label className='absolute text-sm text-[#55556D] duration-300 -top-2.5 left-3 z-10 scale-90 bg-white'>
+						<label className='absolute text-sm text-[#55556D] duration-300 -top-2.5 left-3 scale-90 bg-white'>
 							Номер телефону
 						</label>
 					</div>
@@ -49,7 +49,7 @@ export default async function PersonalInfo() {
 							defaultValue={user.email}
 							disabled
 						/>
-						<label className='absolute text-sm text-[#55556D] duration-300 -top-2.5 left-3 z-10 scale-90 bg-white'>
+						<label className='absolute text-sm text-[#55556D] duration-300 -top-2.5 left-3 scale-90 bg-white'>
 							Пошта
 						</label>
 					</div>

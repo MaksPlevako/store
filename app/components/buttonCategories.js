@@ -13,7 +13,7 @@ export default function ButtonCategories() {
 	return (
 		<div>
 			<button
-				className='relative flex flex-row gap-[10px] border rounded-xl bg-[#6B59CC] py-3 px-5 text-white z-20'
+				className='relative flex flex-row gap-[10px] border rounded-xl bg-[#6B59CC] py-3 px-5 text-white z-30'
 				onClick={() => changeModal()}
 			>
 				<Image src='/img/menu.svg' width={20} height={20} alt='menu' />

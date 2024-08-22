@@ -123,6 +123,7 @@ export default async function Battery({ params }) {
 						<div className='flex flex-row justify-between items-center'>
 							<SetFeedback
 								rating={bat.average_rating}
+								comments={comments.length}
 								_id={bat._id}
 								product_type={'carBatteries'}
 							/>

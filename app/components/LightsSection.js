@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { Rating } from '@mui/material'
 
 export default function LightsSection({ lights }) {
 	return (
@@ -14,14 +15,19 @@ export default function LightsSection({ lights }) {
 						<Image
 							src={light.img}
 							alt={light.brand}
-							width={200}
-							height={250}
-							className='mx-auto w-full'
+							width={250}
+							height={300}
+							className='mx-auto w-auto h-auto'
 						/>
 					</div>
 					<div>
-						<div className='text-[18px] font-medium'>{light.brand}</div>
 						<div className='my-1.5'>{light.title}</div>
+						<Rating
+							name='read-only'
+							value={light.average_rating}
+							precision={0.5}
+							readOnly
+						/>
 						<div className='text-[#7A7680]'>
 							Артикул:
 							<span className='text-[#453888]'>{light.article}</span>

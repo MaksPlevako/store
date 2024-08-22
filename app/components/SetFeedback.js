@@ -17,7 +17,7 @@ export default function SetFeedback({ rating, _id, product_type }) {
 		<div>
 			<Rating
 				name='feedback'
-				size='medium'
+				size='large'
 				value={rating}
 				precision={0.5}
 				onClick={() => setOpen(true)}

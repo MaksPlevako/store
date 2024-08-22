@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { Rating } from '@mui/material'
 
 export default function AutochemistrySection({ autochemistry }) {
 	return (
@@ -14,14 +15,19 @@ export default function AutochemistrySection({ autochemistry }) {
 						<Image
 							src={autochemistry.img}
 							alt={autochemistry.brand}
-							width={150}
-							height={270}
-							className='mx-auto h-full'
+							width={250}
+							height={300}
+							className='mx-auto h-full w-auto'
 						/>
 					</div>
-					<div>
-						<div className='text-[18px] font-medium'>{autochemistry.brand}</div>
+					<div className='mt-5'>
 						<div className='my-1.5'>{autochemistry.title}</div>
+						<Rating
+							name='read-only'
+							value={autochemistry.average_rating}
+							precision={0.5}
+							readOnly
+						/>
 						<div className='text-[#7A7680]'>
 							Артикул:
 							<span className='text-[#453888]'>{autochemistry.article}</span>

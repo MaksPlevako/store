@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { Rating } from '@mui/material'
 
 export default function RimsSection({ rims }) {
 	return (
@@ -10,16 +11,23 @@ export default function RimsSection({ rims }) {
 					className='border rounded bg-white shadow-2xl p-5 group relative flex flex-col h-[550px]'
 					key={rim._id}
 				>
-					<Image
-						src={rim.img}
-						alt={rim.rims_name}
-						width={260}
-						height={260}
-						className='mx-auto'
-					/>
-					<div className='flex flex-col justify-between h-1/3 mt-2'>
-						<div className='text-2xl font-medium'>{rim.rims_name}</div>
+					<div className='w-[250px] h-[300px] mx-auto flex items-center'>
+						<Image
+							src={rim.img}
+							alt={rim.rims_name}
+							width={250}
+							height={300}
+							className='mx-auto w-auto h-auto'
+						/>
+					</div>
+					<div className=' mt-5'>
 						<div className='my-1.5'>{rim.title}</div>
+						<Rating
+							name='read-only'
+							value={rim.average_rating}
+							precision={0.5}
+							readOnly
+						/>
 						<div className='text-[#7A7680]'>
 							Артикул:
 							<span className='text-[#453888]'>{rim.article}</span>

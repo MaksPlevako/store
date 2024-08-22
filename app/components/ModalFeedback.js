@@ -129,7 +129,7 @@ export default function ModalFeedback({
 					</div>
 				) : (
 					<div className='text-center mt-5 w-full'>
-						<div className='text-lg font-medium mb-5'>
+						<div className='text-2xl font-medium mb-5'>
 							Щоб залишити оцінку та коментар потрібно ввійти в свій профіль
 						</div>
 						<Link
